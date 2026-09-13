@@ -8,10 +8,8 @@ import hexlet.code.games.Progression;
 import java.util.Scanner;
 
 public class App {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Please enter the game number and press Enter.");
         System.out.println("1 - Greet");
         System.out.println("2 - Even");
@@ -23,19 +21,29 @@ public class App {
         System.out.print("Your choice: ");
 
         int choice = scanner.nextInt();
-
-        if (choice == 1) {
-            Cli.greetUser();
-        } else if (choice == 2) {
-            Even.play();
-        } else if (choice == 3) {
-            Calc.play();
-        } else if (choice == 4) {
-            Gcd.play();
-        } else if (choice == 5) {
-            Progression.play();
-        } else if (choice == 6) {
-            Prime.play();
+        switch (choice) {
+            case 1:
+                Cli.greet();
+                break;
+            case 2:
+                Even.play();
+                break;
+            case 3:
+                Calc.play();
+                break;
+            case 4:
+                Gcd.play();
+                break;
+            case 5:
+                Progression.play();
+                break;
+            case 6:
+                Prime.play();
+                break;
+            case 0:
+                break;
+            default:
+                throw new RuntimeException("Unknown user choice " + choice);
         }
     }
 }

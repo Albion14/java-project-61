@@ -1,41 +1,40 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import java.util.Random;
+import hexlet.code.Utils;
 
 public class Calc {
 
     public static void play() {
-        Random random = new Random();
-        String[][] rounds = new String[Engine.ROUNDS_COUNT][2];
+        String[][] questionsAndAnswers = new String[Engine.ROUNDS_COUNT][2];
+
+        String[] operators = {"+", "-", "*"};
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
-            int firstNumber = random.nextInt(100);
-            int secondNumber = random.nextInt(100);
-            int operation = random.nextInt(3);
+            int firstNumber = Utils.generateNumber(1, 100);
+            int secondNumber = Utils.generateNumber(1, 100);
+            String operator = operators[Utils.generateNumber(0, operators.length - 1)];
 
-            String operator;
-            int result;
+            int result = calculateExpression(firstNumber, secondNumber, operator);
 
-            switch (operation) {
-                case 0 -> {
-                    operator = "+";
-                    result = firstNumber + secondNumber;
-                }
-                case 1 -> {
-                    operator = "-";
-                    result = firstNumber - secondNumber;
-                }
-                default -> {
-                    operator = "*";
-                    result = firstNumber * secondNumber;
-                }
-            }
-
-            rounds[i][0] = firstNumber + " " + operator + " " + secondNumber;
-            rounds[i][1] = String.valueOf(result);
+            questionsAndAnswers[i][0] = firstNumber + " " + operator + " " + secondNumber;
+            questionsAndAnswers[i][1] = String.valueOf(result);
         }
 
-        Engine.run("What is the result of the expression?", rounds);
+        Engine.run("What is the result of the expression?", questionsAndAnswers);
+    }
+
+    private static int calculateExpression(int firstNumber, int secondNumber, String operator) {
+
+        switch (operator) {
+            case "+":
+                return firstNumber + secondNumber;
+            case "-":
+                return firstNumber - secondNumber;
+            case "*":
+                return firstNumber * secondNumber;
+            default:
+                throw new RuntimeException("Unknown operator " + operator);
+        }
     }
 }

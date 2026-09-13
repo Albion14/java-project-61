@@ -1,22 +1,23 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import java.util.Random;
+import hexlet.code.Utils;
 
 public class Prime {
 
     public static void play() {
-        Random random = new Random();
-        String[][] rounds = new String[Engine.ROUNDS_COUNT][2];
+        String[][] questionsAndAnswers = new String[Engine.ROUNDS_COUNT][2];
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
-            int number = random.nextInt(100) + 1;
+            int number = Utils.generateNumber(1, 100);
 
-            rounds[i][0] = String.valueOf(number);
-            rounds[i][1] = isPrime(number) ? "yes" : "no";
+            questionsAndAnswers[i][0] = String.valueOf(number);
+            questionsAndAnswers[i][1] = isPrime(number) ? "yes" : "no";
         }
 
-        Engine.run("Answer 'yes' if given number is prime. Otherwise answer 'no'.", rounds);
+        Engine.run(
+                "Answer 'yes' if given number is prime. Otherwise answer 'no'.",
+                questionsAndAnswers);
     }
 
     private static boolean isPrime(int number) {
@@ -24,8 +25,8 @@ public class Prime {
             return false;
         }
 
-        for (int i = 2; i * i <= number; i++) {
-            if (number % i == 0) {
+        for (int divisor = 2; divisor * divisor <= number; divisor++) {
+            if (number % divisor == 0) {
                 return false;
             }
         }
